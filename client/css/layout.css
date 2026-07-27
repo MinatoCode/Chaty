@@ -59,6 +59,7 @@
 }
 
 
+/* Overlay */
 
 #overlay {
 
@@ -68,6 +69,8 @@
 
 
 
+/* Mobile */
+
 @media (max-width: 768px) {
 
 
@@ -76,6 +79,7 @@
         display: block;
 
     }
+
 
 
     #sidebar {
@@ -118,7 +122,9 @@
 
         height: calc(100vh - 60px);
 
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.35);
+
+        backdrop-filter: blur(4px);
 
         z-index: 15;
 
@@ -129,6 +135,19 @@
     #overlay.show {
 
         display: block;
+
+    }
+
+
+
+    /* Blur content behind sidebar */
+
+    body:has(#sidebar.active) #chat-list,
+    body:has(#sidebar.active) #main-content {
+
+        filter: blur(3px);
+
+        transition: 0.3s ease;
 
     }
 
@@ -147,6 +166,5 @@
         display: none;
 
     }
-
 
 }
