@@ -34,6 +34,8 @@
 }
 
 
+/* Sidebar */
+
 #sidebar {
 
     background: var(--bg-secondary);
@@ -42,6 +44,8 @@
 
 }
 
+
+/* Chat List */
 
 #chat-list {
 
@@ -52,11 +56,14 @@
 }
 
 
+/* Main Content */
+
 #main-content {
 
     background: var(--bg-primary);
 
 }
+
 
 
 /* Overlay */
@@ -69,7 +76,7 @@
 
 
 
-/* Mobile */
+/* Mobile Layout */
 
 @media (max-width: 768px) {
 
@@ -94,9 +101,11 @@
 
         height: calc(100vh - 60px);
 
+
         z-index: 20;
 
-        transition: 0.3s ease;
+
+        transition: left 0.25s ease;
 
     }
 
@@ -110,6 +119,8 @@
 
 
 
+    /* Dark overlay */
+
     #overlay {
 
         position: fixed;
@@ -118,15 +129,22 @@
 
         left: 0;
 
+
         width: 100%;
 
         height: calc(100vh - 60px);
 
+
         background: rgba(0,0,0,0.35);
 
-        backdrop-filter: blur(4px);
 
         z-index: 15;
+
+
+        opacity: 0;
+
+
+        transition: opacity 0.25s ease;
 
     }
 
@@ -136,18 +154,27 @@
 
         display: block;
 
+        opacity: 1;
+
     }
 
 
 
-    /* Blur content behind sidebar */
+    /* Smooth depth effect instead of blur */
+
+    #chat-list,
+    #main-content {
+
+        transition: transform 0.25s ease;
+
+    }
+
+
 
     body:has(#sidebar.active) #chat-list,
     body:has(#sidebar.active) #main-content {
 
-        filter: blur(3px);
-
-        transition: 0.3s ease;
+        transform: scale(0.98);
 
     }
 
@@ -156,6 +183,8 @@
     #chat-list {
 
         width: 100%;
+
+        border-right: none;
 
     }
 
@@ -166,5 +195,6 @@
         display: none;
 
     }
+
 
 }
