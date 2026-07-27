@@ -27,7 +27,7 @@ export default function chatList() {
 
                 <div class="chat-avatar online">
 
-                    A
+                    B
 
                 </div>
 
