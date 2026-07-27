@@ -12,25 +12,109 @@ export default function chatList() {
         </h3>
 
 
-        <input 
+        <input
             class="chat-search"
             placeholder="Search chats..."
         >
 
 
-        <div class="chat-item">
 
-            <div class="avatar"></div>
+        <div class="chat-items">
 
-            <div>
-                <strong>
-                    No chats yet
-                </strong>
 
-                <p>
-                    Start a conversation
-                </p>
+            <div class="chat-item">
+
+
+                <div class="chat-avatar online">
+
+                    A
+
+                </div>
+
+
+                <div class="chat-info">
+
+                    <div class="chat-top">
+
+                        <strong>
+                            Alex
+                        </strong>
+
+                        <span>
+                            9:42 PM
+                        </span>
+
+                    </div>
+
+
+                    <div class="chat-bottom">
+
+                        <p>
+                            Hey, what's up?
+                        </p>
+
+
+                        <div class="unread">
+
+                            2
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
             </div>
+
+
+
+
+            <div class="chat-item">
+
+
+                <div class="chat-avatar">
+
+                    S
+
+                </div>
+
+
+                <div class="chat-info">
+
+
+                    <div class="chat-top">
+
+                        <strong>
+                            Sarah
+                        </strong>
+
+
+                        <span>
+                            8:15 PM
+                        </span>
+
+
+                    </div>
+
+
+
+                    <div class="chat-bottom">
+
+                        <p>
+                            See you tomorrow
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
 
         </div>
 
@@ -38,4 +122,5 @@ export default function chatList() {
 
 
     return element;
+
 }
