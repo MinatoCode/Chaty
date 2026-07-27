@@ -27,7 +27,13 @@ const mainContent = document.createElement("main");
 mainContent.id = "main-content";
 
 
-// Create components
+// Mobile overlay
+
+const overlay = document.createElement("div");
+overlay.id = "overlay";
+
+
+// Components
 
 headerContainer.appendChild(header());
 
@@ -38,30 +44,48 @@ chatListContainer.appendChild(chatList());
 mainContent.appendChild(home());
 
 
-// Build layout
+// Layout
 
 layoutContainer.appendChild(sidebarContainer);
-
 layoutContainer.appendChild(chatListContainer);
-
 layoutContainer.appendChild(mainContent);
 
-
-// Add to app
 
 app.appendChild(headerContainer);
 
 app.appendChild(layoutContainer);
 
+app.appendChild(overlay);
 
 
-// Mobile sidebar toggle
+
+// Sidebar toggle
 
 const menuButton = document.querySelector(".menu-btn");
+
+
+function closeSidebar() {
+
+    sidebarContainer.classList.remove("active");
+
+    overlay.classList.remove("show");
+
+}
+
 
 
 menuButton.addEventListener("click", () => {
 
     sidebarContainer.classList.toggle("active");
+
+    overlay.classList.toggle("show");
+
+});
+
+
+
+overlay.addEventListener("click", () => {
+
+    closeSidebar();
 
 });
