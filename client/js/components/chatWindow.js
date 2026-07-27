@@ -11,9 +11,7 @@ export default function chatWindow() {
 
 
             <button class="chat-back-btn">
-
                 ➜
-
             </button>
 
 
@@ -22,9 +20,7 @@ export default function chatWindow() {
 
 
                 <div class="chat-avatar online">
-
                     A
-
                 </div>
 
 
@@ -66,13 +62,6 @@ export default function chatWindow() {
             </div>
 
 
-            <div class="message received">
-
-                Nice! Looks cool.
-
-            </div>
-
-
         </div>
 
 
@@ -82,11 +71,12 @@ export default function chatWindow() {
 
 
             <input 
+                class="message-text"
                 placeholder="Type a message..."
             >
 
 
-            <button>
+            <button class="send-btn">
 
                 ➤
 
@@ -97,6 +87,73 @@ export default function chatWindow() {
 
 
     `;
+
+
+
+    const input = element.querySelector(".message-text");
+
+    const sendButton = element.querySelector(".send-btn");
+
+    const messages = element.querySelector(".messages");
+
+
+
+    function sendMessage() {
+
+
+        const text = input.value.trim();
+
+
+
+        if(text === "") {
+
+            return;
+
+        }
+
+
+
+        const message = document.createElement("div");
+
+
+        message.className = "message sent";
+
+
+        message.textContent = text;
+
+
+
+        messages.appendChild(message);
+
+
+
+        input.value = "";
+
+
+
+        messages.scrollTop = messages.scrollHeight;
+
+
+    }
+
+
+
+    sendButton.addEventListener("click", sendMessage);
+
+
+
+    input.addEventListener("keydown", (event) => {
+
+
+        if(event.key === "Enter") {
+
+            sendMessage();
+
+        }
+
+
+    });
+
 
 
     return element;
