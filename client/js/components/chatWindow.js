@@ -10,11 +10,21 @@ export default function chatWindow() {
         <div class="chat-header">
 
 
+            <button class="chat-back-btn">
+
+                ←
+
+            </button>
+
+
+
             <div class="chat-user">
 
 
                 <div class="chat-avatar online">
+
                     A
+
                 </div>
 
 
@@ -23,6 +33,7 @@ export default function chatWindow() {
                     <h3>
                         Alex
                     </h3>
+
 
                     <span>
                         Online
@@ -38,6 +49,7 @@ export default function chatWindow() {
 
 
 
+
         <div class="messages">
 
 
@@ -48,13 +60,11 @@ export default function chatWindow() {
             </div>
 
 
-
             <div class="message sent">
 
                 Nothing much, just testing ChatVerse.
 
             </div>
-
 
 
             <div class="message received">
@@ -78,7 +88,9 @@ export default function chatWindow() {
 
 
             <button>
+
                 ➤
+
             </button>
 
 
