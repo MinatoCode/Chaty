@@ -2,7 +2,6 @@ import header from "./components/header.js";
 import sidebar from "./components/sidebar.js";
 import chatList from "./components/chatList.js";
 import home from "./components/home.js";
-import userCard from "./components/userCard.js";
 
 
 const app = document.getElementById("app");
@@ -10,6 +9,7 @@ const app = document.getElementById("app");
 
 const headerContainer = document.createElement("div");
 headerContainer.id = "header";
+
 
 const layoutContainer = document.createElement("div");
 layoutContainer.id = "layout";
@@ -27,11 +27,10 @@ const mainContent = document.createElement("main");
 mainContent.id = "main-content";
 
 
-// Header
+// Create components
+
 headerContainer.appendChild(header());
 
-
-// Main layout
 sidebarContainer.appendChild(sidebar());
 
 chatListContainer.appendChild(chatList());
@@ -40,11 +39,29 @@ mainContent.appendChild(home());
 
 
 // Build layout
+
 layoutContainer.appendChild(sidebarContainer);
+
 layoutContainer.appendChild(chatListContainer);
+
 layoutContainer.appendChild(mainContent);
 
 
-// Add everything to app
+// Add to app
+
 app.appendChild(headerContainer);
+
 app.appendChild(layoutContainer);
+
+
+
+// Mobile sidebar toggle
+
+const menuButton = document.querySelector(".menu-btn");
+
+
+menuButton.addEventListener("click", () => {
+
+    sidebarContainer.classList.toggle("active");
+
+});
