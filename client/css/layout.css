@@ -9,8 +9,6 @@
 }
 
 
-/* Header */
-
 #header {
 
     width: 100%;
@@ -19,8 +17,6 @@
 
 }
 
-
-/* Main Layout */
 
 #layout {
 
@@ -38,8 +34,6 @@
 }
 
 
-/* Sidebar */
-
 #sidebar {
 
     background: var(--bg-secondary);
@@ -48,8 +42,6 @@
 
 }
 
-
-/* Chat List */
 
 #chat-list {
 
@@ -60,8 +52,6 @@
 }
 
 
-/* Main Content */
-
 #main-content {
 
     background: var(--bg-primary);
@@ -69,9 +59,6 @@
 }
 
 
-/* =========================
-   Mobile Responsive Design
-   ========================= */
 
 @media (max-width: 768px) {
 
@@ -85,16 +72,31 @@
     }
 
 
-    /* Hide sidebar on mobile */
-
     #sidebar {
 
-        display: none;
+        position: fixed;
+
+        top: 60px;
+
+        left: -260px;
+
+        width: 240px;
+
+        height: calc(100vh - 60px);
+
+        z-index: 10;
+
+        transition: 0.3s ease;
 
     }
 
 
-    /* Show chat list full width */
+    #sidebar.active {
+
+        left: 0;
+
+    }
+
 
     #chat-list {
 
@@ -107,20 +109,10 @@
     }
 
 
-    /* Hide main screen initially */
-
     #main-content {
 
         display: none;
 
     }
-
-
-    #header {
-
-        height: 60px;
-
-    }
-
 
 }
