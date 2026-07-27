@@ -1,30 +1,55 @@
-export default function Sidebar() {
+export default function sidebar() {
 
-    const sidebar = document.createElement("div");
+    const element = document.createElement("div");
 
-    sidebar.className = "sidebar-container";
+    element.className = "sidebar-container";
 
-    sidebar.innerHTML = `
-        <h2 class="logo">ChatVerse</h2>
+    element.innerHTML = `
+        <h2 class="logo">
+            ChatVerse
+        </h2>
 
         <nav>
-            <button>💬 Chats</button>
-            <button>👥 Friends</button>
-            <button>📩 Requests</button>
-            <button>🔎 Search</button>
-            <button>👤 Profile</button>
-            <button>⚙ Settings</button>
+
+            <button>
+                💬 Chats
+            </button>
+
+            <button>
+                👥 Friends
+            </button>
+
+            <button>
+                📩 Requests
+            </button>
+
+            <button>
+                🔎 Search
+            </button>
+
+            <button>
+                👤 Profile
+            </button>
+
+            <button>
+                ⚙ Settings
+            </button>
+
         </nav>
 
+
         <div class="user-status">
+
             <div class="avatar"></div>
 
             <div>
                 <p>User</p>
                 <span>● Online</span>
             </div>
+
         </div>
     `;
 
-    return sidebar;
+
+    return element;
 }
