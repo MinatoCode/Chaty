@@ -10,7 +10,7 @@
 
 
 
-/* Chat Header */
+/* Header */
 
 .chat-header {
 
@@ -24,19 +24,16 @@
     align-items: center;
 
 
+    gap: 15px;
+
+
     background: var(--bg-secondary);
 
-
     border-bottom: 1px solid var(--border);
-
-
-    gap: 15px;
 
 }
 
 
-
-/* Back Button */
 
 .chat-back-btn {
 
@@ -52,20 +49,18 @@
     justify-content: center;
 
 
-    background: var(--bg-card);
-
-
     border: none;
 
-
     border-radius: 50%;
+
+
+    background: var(--bg-card);
 
 
     color: var(--text-primary);
 
 
     font-size: 26px;
-
 
     font-weight: 900;
 
@@ -74,9 +69,6 @@
 
 
     transform: scaleX(-1);
-
-
-    transition: 0.2s ease;
 
 }
 
@@ -87,6 +79,7 @@
     transform: scaleX(-1) scale(0.9);
 
 }
+
 
 
 
@@ -125,6 +118,7 @@
 
 
 
+
 /* Avatar */
 
 .chat-avatar {
@@ -156,6 +150,7 @@
 
 
 
+
 /* Messages */
 
 .messages {
@@ -181,7 +176,6 @@
 
 
 
-/* Message Bubble */
 
 .message {
 
@@ -197,34 +191,7 @@
     font-size: 15px;
 
 
-    word-wrap: break-word;
-
-
-    animation: messagePop 0.2s ease;
-
-}
-
-
-
-@keyframes messagePop {
-
-
-    from {
-
-        opacity: 0;
-
-        transform: scale(0.8);
-
-    }
-
-
-    to {
-
-        opacity: 1;
-
-        transform: scale(1);
-
-    }
+    word-break: break-word;
 
 }
 
@@ -255,9 +222,13 @@
 
 
 
-/* Input Area */
+
+/* Message Input */
 
 .message-input {
+
+    width: 100%;
+
 
     padding: 15px;
 
@@ -271,13 +242,19 @@
     gap: 10px;
 
 
+    box-sizing: border-box;
+
+
+    background: var(--bg-primary);
+
+
     border-top: 1px solid var(--border);
 
 }
 
 
 
-.message-input input {
+.message-text {
 
     flex: 1;
 
@@ -285,16 +262,10 @@
     height: 45px;
 
 
-    padding: 0 16px;
+    padding: 0 15px;
 
 
     border-radius: 22px;
-
-
-    background: var(--bg-secondary);
-
-
-    color: var(--text-primary);
 
 
     border: 1px solid var(--border);
@@ -302,19 +273,15 @@
 
     outline: none;
 
-}
+
+    background: var(--bg-secondary);
 
 
-
-.message-input input:focus {
-
-    border-color: var(--primary);
+    color: var(--text-primary);
 
 }
 
 
-
-/* Send Button */
 
 .send-btn {
 
@@ -323,10 +290,17 @@
     height: 45px;
 
 
-    border-radius: 50%;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
 
     border: none;
+
+
+    border-radius: 50%;
 
 
     background: var(--primary);
@@ -339,9 +313,6 @@
 
 
     cursor: pointer;
-
-
-    transition: 0.2s ease;
 
 }
 
