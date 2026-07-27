@@ -1,0 +1,36 @@
+:root {
+
+    /* Colors */
+
+    --bg-primary: #0F172A;
+    --bg-secondary: #111827;
+    --bg-card: #1E293B;
+
+    --primary: #3B82F6;
+    --primary-hover: #2563EB;
+
+    --text-primary: #FFFFFF;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+
+    --border: #334155;
+
+
+    /* Sizes */
+
+    --sidebar-width: 240px;
+    --chat-list-width: 320px;
+
+
+    /* Radius */
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+
+    /* Font */
+
+    --font-main: Inter, Arial, sans-serif;
+
+}
