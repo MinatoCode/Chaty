@@ -24,11 +24,8 @@ export default function chatList() {
 
             <div class="chat-item">
 
-
                 <div class="chat-avatar online">
-
-                    B
-
+                    A
                 </div>
 
 
@@ -37,7 +34,7 @@ export default function chatList() {
                     <div class="chat-top">
 
                         <strong>
-                            Bireyyy🌚💦
+                            Alex
                         </strong>
 
                         <span>
@@ -55,16 +52,12 @@ export default function chatList() {
 
 
                         <div class="unread">
-
                             2
-
                         </div>
 
                     </div>
 
-
                 </div>
-
 
             </div>
 
@@ -73,31 +66,24 @@ export default function chatList() {
 
             <div class="chat-item">
 
-
                 <div class="chat-avatar">
-
                     S
-
                 </div>
 
 
                 <div class="chat-info">
 
-
                     <div class="chat-top">
 
                         <strong>
-                            Simrannn💗💗
+                            Sarah
                         </strong>
-
 
                         <span>
                             8:15 PM
                         </span>
 
-
                     </div>
-
 
 
                     <div class="chat-bottom">
@@ -108,9 +94,7 @@ export default function chatList() {
 
                     </div>
 
-
                 </div>
-
 
             </div>
 
@@ -119,6 +103,35 @@ export default function chatList() {
         </div>
 
     `;
+
+
+
+    // Active chat selection
+
+    const chats = element.querySelectorAll(".chat-item");
+
+
+    chats.forEach(chat => {
+
+
+        chat.addEventListener("click", () => {
+
+
+            chats.forEach(item => {
+
+                item.classList.remove("active");
+
+            });
+
+
+            chat.classList.add("active");
+
+
+        });
+
+
+    });
+
 
 
     return element;
