@@ -4,11 +4,18 @@ export default function header() {
 
     element.className = "header-container";
 
-
     element.innerHTML = `
 
-        <div class="header-logo">
-            ChatVerse
+        <div class="header-left">
+
+            <button class="menu-btn">
+                ☰
+            </button>
+
+            <div class="header-logo">
+                ChatVerse
+            </div>
+
         </div>
 
 
@@ -17,7 +24,6 @@ export default function header() {
             <button class="notification-btn">
                 🔔
             </button>
-
 
             <div class="header-avatar"></div>
 
