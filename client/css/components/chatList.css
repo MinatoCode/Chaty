@@ -102,6 +102,42 @@
 
 
 
+.chat-item.active {
+
+    background: var(--primary);
+
+    color: white;
+
+}
+
+
+
+.chat-item.active p {
+
+    color: rgba(255,255,255,0.8);
+
+}
+
+
+
+.chat-item.active span {
+
+    color: rgba(255,255,255,0.7);
+
+}
+
+
+
+.chat-item.active .unread {
+
+    background: white;
+
+    color: var(--primary);
+
+}
+
+
+
 .chat-avatar {
 
     width: 45px;
@@ -243,4 +279,4 @@
 
     font-size: 12px;
 
-    }
+}
