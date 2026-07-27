@@ -9,15 +9,12 @@ export default function chatWindow() {
 
         <div class="chat-header">
 
-
             <button class="chat-back-btn">
                 ➜
             </button>
 
 
-
             <div class="chat-user">
-
 
                 <div class="chat-avatar online">
                     A
@@ -36,12 +33,9 @@ export default function chatWindow() {
 
                 </div>
 
-
             </div>
 
-
         </div>
-
 
 
 
@@ -49,21 +43,16 @@ export default function chatWindow() {
 
 
             <div class="message received">
-
                 Hey, what's up?
-
             </div>
 
 
             <div class="message sent">
-
                 Nothing much, just testing ChatVerse.
-
             </div>
 
 
         </div>
-
 
 
 
@@ -77,14 +66,11 @@ export default function chatWindow() {
 
 
             <button class="send-btn">
-
                 ➤
-
             </button>
 
 
         </div>
-
 
     `;
 
@@ -104,8 +90,7 @@ export default function chatWindow() {
         const text = input.value.trim();
 
 
-
-        if(text === "") {
+        if (!text) {
 
             return;
 
@@ -133,7 +118,6 @@ export default function chatWindow() {
 
         messages.scrollTop = messages.scrollHeight;
 
-
     }
 
 
@@ -145,7 +129,7 @@ export default function chatWindow() {
     input.addEventListener("keydown", (event) => {
 
 
-        if(event.key === "Enter") {
+        if (event.key === "Enter") {
 
             sendMessage();
 
