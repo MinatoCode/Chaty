@@ -37,7 +37,7 @@ export default function chatList() {
                     <div class="chat-top">
 
                         <strong>
-                            Alex
+                            Bireyyy🌚💦
                         </strong>
 
                         <span>
@@ -87,7 +87,7 @@ export default function chatList() {
                     <div class="chat-top">
 
                         <strong>
-                            Sarah
+                            Simrannn💗💗
                         </strong>
 
 
