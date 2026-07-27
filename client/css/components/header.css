@@ -1,0 +1,72 @@
+.header-container {
+
+    height: 70px;
+
+    padding: 0 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: var(--bg-secondary);
+
+    border-bottom: 1px solid var(--border);
+
+}
+
+
+.header-logo {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+}
+
+
+.header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.notification-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: var(--bg-card);
+
+    color: var(--text-primary);
+
+}
+
+
+.notification-btn:hover {
+
+    background: var(--primary);
+
+}
+
+
+.header-avatar {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+}
