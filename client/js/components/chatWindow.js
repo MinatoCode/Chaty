@@ -39,6 +39,7 @@ export default function chatWindow() {
 
 
 
+
         <div class="messages">
 
 
@@ -56,11 +57,13 @@ export default function chatWindow() {
 
 
 
+
         <div class="message-input">
 
 
             <input 
                 class="message-text"
+                type="text"
                 placeholder="Type a message..."
             >
 
@@ -90,7 +93,8 @@ export default function chatWindow() {
         const text = input.value.trim();
 
 
-        if (!text) {
+
+        if (text === "") {
 
             return;
 
@@ -134,7 +138,6 @@ export default function chatWindow() {
             sendMessage();
 
         }
-
 
     });
 
