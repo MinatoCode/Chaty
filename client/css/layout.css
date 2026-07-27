@@ -1,19 +1,24 @@
 #app {
 
     width: 100%;
+
     height: 100vh;
 
     display: flex;
+
     flex-direction: column;
 
+    overflow: hidden;
+
 }
+
 
 
 #header {
 
     width: 100%;
 
-    height: 70px;
+    flex-shrink: 0;
 
 }
 
@@ -36,7 +41,13 @@
 
 
 
+/* Sidebar */
+
 #sidebar {
+
+    height: 100%;
+
+    overflow: hidden;
 
     background: var(--bg-secondary);
 
@@ -46,7 +57,13 @@
 
 
 
+/* Chat List */
+
 #chat-list {
+
+    height: 100%;
+
+    overflow: hidden;
 
     background: var(--bg-card);
 
@@ -56,13 +73,61 @@
 
 
 
+/* Main Chat Area */
+
 #main-content {
+
+    height: 100%;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
 
     background: var(--bg-primary);
 
 }
 
 
+
+/* Chat window sizing */
+
+.chat-window {
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+}
+
+
+
+.messages {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+}
+
+
+
+.message-input {
+
+    flex-shrink: 0;
+
+}
+
+
+
+/* Overlay */
 
 #overlay {
 
@@ -73,6 +138,8 @@
 
 
 
+
+/* Mobile */
 
 @media (max-width: 768px) {
 
@@ -109,7 +176,9 @@
 
         height: calc(100vh - 60px);
 
+
         z-index: 20;
+
 
         transition: left 0.25s ease;
 
@@ -129,6 +198,8 @@
 
         position: fixed;
 
+        display: none;
+
         top: 60px;
 
         left: 0;
@@ -137,11 +208,14 @@
 
         height: calc(100vh - 60px);
 
+
         background: rgba(0,0,0,0.25);
+
 
         backdrop-filter: blur(5px);
 
         -webkit-backdrop-filter: blur(5px);
+
 
         z-index: 15;
 
@@ -158,7 +232,6 @@
 
 
 
-    /* Chat list screen */
 
     #chat-list {
 
@@ -168,12 +241,14 @@
 
         left: 0;
 
+
         width: 100%;
 
         height: 100%;
 
 
         transform: translateX(0);
+
 
         transition: transform 0.3s ease;
 
@@ -182,7 +257,6 @@
 
 
 
-    /* Chat window screen */
 
     #main-content {
 
@@ -192,12 +266,14 @@
 
         left: 0;
 
+
         width: 100%;
 
         height: 100%;
 
 
         transform: translateX(100%);
+
 
         transition: transform 0.3s ease;
 
@@ -206,13 +282,14 @@
 
 
 
-    /* When chat opens */
 
     body.chat-open #chat-list {
 
         transform: translateX(-100%);
 
     }
+
+
 
 
 
@@ -223,5 +300,4 @@
     }
 
 
-
-}
+            }
