@@ -1,4 +1,31 @@
 #app {
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+/* Header */
+
+#header {
+
+    width: 100%;
+
+    height: 70px;
+
+}
+
+
+/* Main Layout */
+
+#layout {
+
+    flex: 1;
+
     display: grid;
 
     grid-template-columns:
@@ -6,30 +33,37 @@
         var(--chat-list-width)
         1fr;
 
-    grid-template-rows: 1fr;
+    overflow: hidden;
 
-    height: 100vh;
 }
 
 
 /* Sidebar */
 
 #sidebar {
+
     background: var(--bg-secondary);
+
     border-right: 1px solid var(--border);
+
 }
 
 
 /* Chat List */
 
 #chat-list {
+
     background: var(--bg-card);
+
     border-right: 1px solid var(--border);
+
 }
 
 
 /* Main Content */
 
 #main-content {
+
     background: var(--bg-primary);
+
 }
