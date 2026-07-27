@@ -12,7 +12,7 @@ export default function chatWindow() {
 
             <button class="chat-back-btn">
 
-                ←
+                ➜
 
             </button>
 
@@ -33,7 +33,6 @@ export default function chatWindow() {
                     <h3>
                         Alex
                     </h3>
-
 
                     <span>
                         Online
