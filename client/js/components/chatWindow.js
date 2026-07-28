@@ -1,9 +1,11 @@
+import { messages } from "../data/messages.js";
+import { getCurrentTime } from "../utils/time.js";
+
 export default function chatWindow() {
 
     const element = document.createElement("div");
 
     element.className = "chat-window";
-
 
     element.innerHTML = `
 
@@ -13,23 +15,17 @@ export default function chatWindow() {
                 ➜
             </button>
 
-
             <div class="chat-user">
 
                 <div class="chat-avatar online">
                     A
                 </div>
 
+                <div class="chat-info">
 
-                <div>
+                    <h3>Alex</h3>
 
-                    <h3>
-                        Alex
-                    </h3>
-
-                    <span>
-                        Online
-                    </span>
+                    <span>Online</span>
 
                 </div>
 
@@ -37,101 +33,78 @@ export default function chatWindow() {
 
         </div>
 
-
-
-
-        <div class="messages">
-
-
-            <div class="message received">
-                Hey, what's up?
-            </div>
-
-
-            <div class="message sent">
-                Nothing much, just testing ChatVerse.
-            </div>
-
-
-        </div>
-
-
-
+        <div class="messages"></div>
 
         <div class="message-input">
 
-
-            <input 
+            <input
                 class="message-text"
                 type="text"
                 placeholder="Type a message..."
             >
 
-
             <button class="send-btn">
                 ➤
             </button>
-
 
         </div>
 
     `;
 
-
-
     const input = element.querySelector(".message-text");
-
     const sendButton = element.querySelector(".send-btn");
+    const messagesContainer = element.querySelector(".messages");
 
-    const messages = element.querySelector(".messages");
+    function renderMessages() {
 
+        messagesContainer.innerHTML = "";
 
+        messages.forEach((message) => {
 
-    function sendMessage() {
+            const bubble = document.createElement("div");
 
+            bubble.className = `message ${message.own ? "sent" : "received"}`;
 
-        const text = input.value.trim();
+            bubble.innerHTML = `
+                <div>${message.text}</div>
+                <small class="message-time">${message.time}</small>
+            `;
 
+            messagesContainer.appendChild(bubble);
 
+        });
 
-        if (text === "") {
-
-            return;
-
-        }
-
-
-
-        const message = document.createElement("div");
-
-
-        message.className = "message sent";
-
-
-        message.textContent = text;
-
-
-
-        messages.appendChild(message);
-
-
-
-        input.value = "";
-
-
-
-        messages.scrollTop = messages.scrollHeight;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
     }
 
+    function sendMessage() {
 
+        const text = input.value.trim();
+
+        if (!text) return;
+
+        messages.push({
+            id: Date.now(),
+            sender: "You",
+            text,
+            own: true,
+            time: getCurrentTime()
+        });
+
+        renderMessages();
+
+        input.value = "";
+
+        input.focus();
+
+    }
+
+    renderMessages();
 
     sendButton.addEventListener("click", sendMessage);
 
-
-
     input.addEventListener("keydown", (event) => {
-
 
         if (event.key === "Enter") {
 
@@ -141,8 +114,6 @@ export default function chatWindow() {
 
     });
 
-
-
     return element;
 
-}
+            }
