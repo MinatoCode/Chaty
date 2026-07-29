@@ -1,15 +1,18 @@
 import express from 'express';
+import User from '../models/User.js';
+
 const router = express.Router();
 
-const users = [
-  { id: 'demo-user', name: 'Alex', email: 'alex@example.com', status: 'online' },
-  { id: 'demo-user-2', name: 'Sarah', email: 'sarah@example.com', status: 'offline' }
-];
-
-router.get('/search', (req, res) => {
+router.get('/search', async (req, res) => {
   const query = (req.query.q || '').toLowerCase();
-  const filtered = users.filter((user) => user.name.toLowerCase().includes(query) || user.email.toLowerCase().includes(query));
-  res.json({ users: filtered });
+  const users = await User.find({
+    $or: [
+      { name: { $regex: query, $options: 'i' } },
+      { email: { $regex: query, $options: 'i' } }
+    ]
+  }).limit(20);
+
+  res.json({ users: users.map((user) => ({ id: user._id.toString(), name: user.name, email: user.email, status: user.status })) });
 });
 
 export default router;

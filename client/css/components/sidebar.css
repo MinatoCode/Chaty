@@ -1,78 +1,58 @@
 .sidebar-container {
     height: 100%;
-    padding: 20px;
-
+    padding: 22px 18px;
     display: flex;
     flex-direction: column;
+    background: rgba(8, 15, 29, 0.7);
 }
-
 
 .logo {
-    font-size: 24px;
-    font-weight: 700;
-
-    margin-bottom: 30px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
 }
-
 
 .sidebar-container nav {
     display: flex;
     flex-direction: column;
-
     gap: 8px;
 }
 
-
 .sidebar-container button {
     width: 100%;
-
-    padding: 12px;
-
+    padding: 12px 13px;
     background: transparent;
-
     color: var(--text-secondary);
-
     border-radius: var(--radius-md);
-
     text-align: left;
-
-    font-size: 15px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
 }
-
 
 .sidebar-container button:hover {
-    background: var(--bg-card);
-
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(34, 211, 238, 0.12));
     color: var(--text-primary);
+    transform: translateX(2px);
 }
-
 
 .user-status {
     margin-top: auto;
-
     display: flex;
     align-items: center;
-
     gap: 12px;
-
-    padding-top: 15px;
-
+    padding-top: 16px;
     border-top: 1px solid var(--border);
 }
 
-
 .avatar {
-    width: 42px;
-    height: 42px;
-
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--accent), var(--primary));
 }
-
 
 .user-status span {
     color: var(--text-muted);
-
-    font-size: 12px;
+    font-size: 0.78rem;
 }

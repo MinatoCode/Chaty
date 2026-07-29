@@ -1,55 +1,48 @@
 import express from 'express';
+import Chat from '../models/Chat.js';
+import Message from '../models/Message.js';
+
 const router = express.Router();
 
-const chats = [
-  {
-    id: 'chat-1',
-    participants: ['demo-user', 'current-user'],
-    name: 'Alex',
-    messages: [
-      { id: 'm1', text: 'Hey, what is up?', senderId: 'demo-user', createdAt: new Date().toISOString() },
-      { id: 'm2', text: 'Working on the new build.', senderId: 'current-user', createdAt: new Date().toISOString() }
-    ]
-  }
-];
-
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const chats = await Chat.find({ participants: req.user.id }).sort({ updatedAt: -1 });
   res.json({ chats });
 });
 
-router.post('/', (req, res) => {
-  const chat = {
-    id: `chat-${Date.now()}`,
+router.post('/', async (req, res) => {
+  const chat = await Chat.create({
     participants: [req.user.id, req.body.userId],
-    name: req.body.name || 'New Chat',
-    messages: []
-  };
-  chats.push(chat);
+    name: req.body.name || 'New Chat'
+  });
+
   res.status(201).json({ chat });
 });
 
-router.get('/:chatId/messages', (req, res) => {
-  const chat = chats.find((entry) => entry.id === req.params.chatId);
+router.get('/:chatId/messages', async (req, res) => {
+  const chat = await Chat.findById(req.params.chatId);
   if (!chat) {
     return res.status(404).json({ message: 'Chat not found' });
   }
-  res.json({ messages: chat.messages });
+
+  const messages = await Message.find({ chatId: chat._id }).sort({ createdAt: 1 });
+  res.json({ messages });
 });
 
-router.post('/:chatId/messages', (req, res) => {
-  const chat = chats.find((entry) => entry.id === req.params.chatId);
+router.post('/:chatId/messages', async (req, res) => {
+  const chat = await Chat.findById(req.params.chatId);
   if (!chat) {
     return res.status(404).json({ message: 'Chat not found' });
   }
 
-  const message = {
-    id: `m-${Date.now()}`,
-    text: req.body.text,
+  const message = await Message.create({
+    chatId: chat._id,
     senderId: req.user.id,
-    createdAt: new Date().toISOString()
-  };
+    text: req.body.text
+  });
 
-  chat.messages.push(message);
+  chat.updatedAt = new Date();
+  await chat.save();
+
   res.status(201).json({ message });
 });
 

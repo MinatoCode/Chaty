@@ -8,6 +8,7 @@ export default function authView() {
       <h2>Welcome to Chaty</h2>
       <p>Sign in to continue your conversations.</p>
       <form class="auth-form">
+        <input name="name" type="text" placeholder="Your name" style="display:none;" />
         <input name="email" type="email" placeholder="Email" required />
         <input name="password" type="password" placeholder="Password" required />
         <button type="submit">Continue</button>
@@ -22,6 +23,7 @@ export default function authView() {
   const toggleMode = element.querySelector('.toggle-mode');
   const title = element.querySelector('h2');
   const subtitle = element.querySelector('p');
+  const nameInput = element.querySelector('input[name="name"]');
   const emailInput = element.querySelector('input[name="email"]');
   const passwordInput = element.querySelector('input[name="password"]');
   const submitButton = element.querySelector('button[type="submit"]');
@@ -34,6 +36,7 @@ export default function authView() {
     subtitle.textContent = nextMode === 'login' ? 'Sign in to continue your conversations.' : 'Join Chaty and start messaging.';
     toggleMode.textContent = nextMode === 'login' ? 'Create one' : 'Sign in';
     submitButton.textContent = nextMode === 'login' ? 'Continue' : 'Create account';
+    nameInput.style.display = nextMode === 'register' ? 'block' : 'none';
   };
 
   toggleMode.addEventListener('click', (event) => {
@@ -51,8 +54,12 @@ export default function authView() {
     };
 
     if (mode === 'register') {
-      const name = window.prompt('Enter your name');
-      if (!name) return;
+      const nameInput = element.querySelector('input[name="name"]');
+      const name = nameInput ? nameInput.value.trim() : '';
+      if (!name) {
+        message.textContent = 'Please enter your name.';
+        return;
+      }
       payload.name = name;
     }
 

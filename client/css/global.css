@@ -15,6 +15,7 @@ body {
 
 body {
     overflow: hidden;
+    background-attachment: fixed;
 }
 
 button,
@@ -30,4 +31,9 @@ button {
 img {
     max-width: 100%;
     display: block;
+}
+
+::selection {
+    background: rgba(124, 58, 237, 0.35);
+    color: white;
 }

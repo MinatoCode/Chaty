@@ -10,6 +10,7 @@ import chatRoutes from './routes/chats.js';
 import userRoutes from './routes/users.js';
 import { authMiddleware } from './middleware/auth.js';
 import { initializeSocket } from './sockets/index.js';
+import { connectDatabase } from './config/database.js';
 
 dotenv.config();
 
@@ -43,6 +44,9 @@ app.get('*', (req, res) => {
 initializeSocket(io);
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Chaty server running on http://localhost:${PORT}`);
+
+connectDatabase().then(() => {
+  server.listen(PORT, () => {
+    console.log(`Chaty server running on http://localhost:${PORT}`);
+  });
 });

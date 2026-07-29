@@ -1,102 +1,62 @@
 .header-container {
-
-    height: 70px;
-
-    padding: 0 25px;
-
+    height: 74px;
+    padding: 0 24px;
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    background: var(--bg-secondary);
-
+    background: rgba(8, 15, 29, 0.8);
+    backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.2);
 }
-
 
 .header-left {
-
     display: flex;
-
     align-items: center;
-
-    gap: 15px;
-
+    gap: 14px;
 }
-
 
 .header-logo {
-
-    font-size: 22px;
-
-    font-weight: 700;
-
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
 }
-
 
 .menu-btn {
-
     display: none;
-
-    width: 40px;
-
-    height: 40px;
-
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-
-    background: var(--bg-card);
-
+    background: linear-gradient(135deg, var(--bg-card), rgba(124, 58, 237, 0.18));
     color: var(--text-primary);
-
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
 }
-
 
 .header-actions {
-
     display: flex;
-
     align-items: center;
-
-    gap: 15px;
-
+    gap: 12px;
 }
-
 
 .notification-btn {
-
-    width: 40px;
-
-    height: 40px;
-
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-
-    background: var(--bg-card);
-
+    background: linear-gradient(135deg, var(--bg-card), rgba(124, 58, 237, 0.16));
     color: var(--text-primary);
-
 }
-
 
 .notification-btn:hover {
-
     background: var(--primary);
-
+    transform: translateY(-1px);
 }
 
-
 .header-avatar {
-
-    width: 40px;
-
-    height: 40px;
-
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-
-    background: var(--primary);
-
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.16);
 }
 
 

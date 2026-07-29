@@ -2,23 +2,21 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: var(--bg-primary);
+    background: linear-gradient(180deg, rgba(8, 15, 29, 0.95), rgba(17, 24, 39, 0.95));
     overflow: hidden;
 }
 
 /* ================= HEADER ================= */
 
 .chat-header {
-    height: 70px;
+    height: 74px;
     padding: 0 18px;
-
     display: flex;
     align-items: center;
-    gap: 15px;
-
-    background: var(--bg-secondary);
+    gap: 14px;
+    background: rgba(8, 15, 29, 0.75);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
-
     flex-shrink: 0;
 }
 
@@ -91,42 +89,34 @@
 
 .messages {
     flex: 1;
-
     overflow-y: auto;
-
     padding: 20px;
-
     display: flex;
     flex-direction: column;
     gap: 12px;
-
     min-height: 0;
+    background-image: radial-gradient(circle at top left, rgba(124, 58, 237, 0.16), transparent 30%), radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.15), transparent 28%);
 }
 
 .message {
-    max-width: 75%;
-
-    padding: 12px 16px;
-
-    border-radius: 18px;
-
+    max-width: 76%;
+    padding: 12px 14px;
+    border-radius: 18px 18px 18px 6px;
     word-break: break-word;
-
     animation: pop .18s ease;
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.2);
 }
 
 .message.received {
     align-self: flex-start;
-
-    background: var(--bg-secondary);
+    background: rgba(15, 23, 42, 0.95);
 }
 
 .message.sent {
     align-self: flex-end;
-
-    background: var(--primary);
-
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     color: white;
+    border-radius: 18px 18px 6px 18px;
 }
 
 @keyframes pop {
@@ -153,33 +143,24 @@
 
 .message-input {
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     gap: 12px;
-
     padding: 15px;
-
     border-top: 1px solid var(--border);
-
-    background: var(--bg-primary);
+    background: rgba(8, 15, 29, 0.8);
 }
 
 .message-text {
     flex: 1;
-
-    height: 46px;
-
+    height: 48px;
     border: 1px solid var(--border);
-    border-radius: 25px;
-
-    padding: 0 18px;
-
-    background: var(--bg-secondary);
-
+    border-radius: 999px;
+    padding: 0 16px;
+    background: rgba(15, 23, 42, 0.88);
     color: var(--text-primary);
-
     outline: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
 }
 
 .message-text:focus {
@@ -187,22 +168,16 @@
 }
 
 .send-btn {
-    width: 46px;
-    height: 46px;
-
+    width: 48px;
+    height: 48px;
     border: none;
-
     border-radius: 50%;
-
-    background: var(--primary);
-
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     color: white;
-
     font-size: 18px;
-
     cursor: pointer;
-
     transition: .2s;
+    box-shadow: 0 8px 18px rgba(124, 58, 237, 0.32);
 }
 
 .send-btn:hover {
