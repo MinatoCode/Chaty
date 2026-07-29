@@ -5,17 +5,27 @@ export default function chatList({ onSelectChat } = {}) {
   element.className = 'chat-list-container';
 
   element.innerHTML = `
-    <h3>Chats</h3>
-    <input class="chat-search" placeholder="Search people by name or email..." />
-    <div class="search-results"></div>
-    <div class="friend-requests"></div>
-    <div class="chat-items"></div>
+    <div class="view-switch">
+      <button class="view-btn active" data-view="chats">Chats</button>
+      <button class="view-btn" data-view="friends">Friends</button>
+    </div>
+    <div class="view-panel chats-panel">
+      <div class="chat-items"></div>
+    </div>
+    <div class="view-panel friends-panel" hidden>
+      <input class="chat-search" placeholder="Search people by name or email..." />
+      <div class="search-results"></div>
+      <div class="friend-requests"></div>
+    </div>
   `;
 
   const searchInput = element.querySelector('.chat-search');
   const resultsContainer = element.querySelector('.search-results');
   const requestsContainer = element.querySelector('.friend-requests');
   const chatsContainer = element.querySelector('.chat-items');
+  const viewButtons = element.querySelectorAll('.view-btn');
+  const chatsPanel = element.querySelector('.chats-panel');
+  const friendsPanel = element.querySelector('.friends-panel');
   let searchTimer = null;
 
   function renderChats(chats) {
@@ -170,7 +180,16 @@ export default function chatList({ onSelectChat } = {}) {
     }
   }
 
-  searchInput.addEventListener('input', () => {
+  viewButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      viewButtons.forEach((item) => item.classList.toggle('active', item === button));
+      const isFriends = button.dataset.view === 'friends';
+      chatsPanel.hidden = isFriends;
+      friendsPanel.hidden = !isFriends;
+    });
+  });
+
+  searchInput?.addEventListener('input', () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(searchPeople, 250);
   });

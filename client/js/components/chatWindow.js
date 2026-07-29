@@ -1,7 +1,7 @@
 import { getChatMessages, sendChatMessage } from '../../services/api.js';
 import { authStore } from '../../store/authStore.js';
 
-export default function chatWindow(chat = null) {
+export default function chatWindow(chat = null, onBack = null) {
     const element = document.createElement('div');
     element.className = 'chat-window';
 
@@ -12,7 +12,7 @@ export default function chatWindow(chat = null) {
                 <div class="chat-avatar online">${(chat?.name || 'C').charAt(0).toUpperCase()}</div>
                 <div class="chat-info">
                     <h3>${chat?.name || 'Select a chat'}</h3>
-                    <span>Online</span>
+                    <span>${chat? 'Online' : 'Choose a conversation'}</span>
                 </div>
             </div>
         </div>
@@ -25,6 +25,7 @@ export default function chatWindow(chat = null) {
 
     const input = element.querySelector('.message-text');
     const sendButton = element.querySelector('.send-btn');
+    const backButton = element.querySelector('.chat-back-btn');
     const messagesContainer = element.querySelector('.messages');
     let activeChat = chat;
     let messages = [];
@@ -32,10 +33,18 @@ export default function chatWindow(chat = null) {
     const hasChat = Boolean(activeChat?._id);
     input.disabled = !hasChat;
     sendButton.disabled = !hasChat;
+    backButton.style.visibility = hasChat ? 'visible' : 'hidden';
 
     if (!hasChat) {
         input.placeholder = 'Select a chat to start messaging.';
+        messagesContainer.innerHTML = '<div class="chat-placeholder">Search or accept a friend request to start chatting.</div>';
     }
+
+    backButton.addEventListener('click', () => {
+        if (typeof onBack === 'function') {
+            onBack();
+        }
+    });
 
     async function loadMessages() {
         if (!activeChat?._id) {
@@ -66,7 +75,7 @@ export default function chatWindow(chat = null) {
             const senderId = message.senderId?.toString ? message.senderId.toString() : message.senderId;
             const isOwnMessage = senderId === currentUserId;
             bubble.className = `message ${isOwnMessage ? 'sent' : 'received'}`;
-            bubble.innerHTML = `<div>${message.text}</div><small class="message-time">${new Date(message.createdAt).toLocaleTimeString()}</small>`;
+            bubble.innerHTML = `<div>${message.text}</div><small class="message-time">${new Date(message.createdAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</small>`;
             messagesContainer.appendChild(bubble);
         });
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -93,7 +102,9 @@ export default function chatWindow(chat = null) {
         }
     });
 
-    loadMessages();
+    if (hasChat) {
+        loadMessages();
+    }
 
     return element;
 }

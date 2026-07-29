@@ -32,17 +32,25 @@ async function bootstrap() {
     const mainContent = document.createElement("main");
     mainContent.id = "main-content";
 
-    const initialChatWindow = chatWindow();
+    const renderChatView = (chat = null) => {
+        mainContent.innerHTML = '';
+        mainContent.appendChild(chatWindow(chat, () => {
+            document.body.classList.remove('chat-open');
+            mainContent.innerHTML = '';
+            mainContent.appendChild(chatWindow(null));
+        }));
+    };
+
     const listComponent = chatList({
         onSelectChat: (chat) => {
-            mainContent.innerHTML = '';
-            mainContent.appendChild(chatWindow(chat));
+            document.body.classList.add('chat-open');
+            renderChatView(chat);
         }
     });
 
     headerContainer.appendChild(header());
     chatListContainer.appendChild(listComponent);
-    mainContent.appendChild(initialChatWindow);
+    renderChatView();
 
     layoutContainer.appendChild(chatListContainer);
     layoutContainer.appendChild(mainContent);

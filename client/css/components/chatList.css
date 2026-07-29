@@ -9,6 +9,27 @@
     font-size: 1.1rem;
 }
 
+.view-switch {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.view-btn {
+    flex: 1;
+    border: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.7);
+    color: var(--text-primary);
+    border-radius: 999px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.view-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
 .chat-search {
     width: 100%;
     padding: 12px 14px;

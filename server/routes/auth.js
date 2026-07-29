@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
     status: 'online'
   });
 
-  const token = jwt.sign({ id: user._id.toString(), email: user.email, name: user.name }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '7d' });
+  const token = jwt.sign({ id: user._id.toString(), email: user.email, name: user.name }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '30d' });
 
   res.status(201).json({ token, user: { id: user._id.toString(), name: user.name, email: user.email, status: user.status } });
 });
@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 
-  const token = jwt.sign({ id: user._id.toString(), email: user.email, name: user.name }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '7d' });
+  const token = jwt.sign({ id: user._id.toString(), email: user.email, name: user.name }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '30d' });
 
   res.json({ token, user: { id: user._id.toString(), name: user.name, email: user.email, status: user.status } });
 });
