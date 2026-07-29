@@ -8,10 +8,15 @@ import { authStore } from "../store/authStore.js";
 const app = document.getElementById("app");
 
 async function bootstrap() {
-    await authStore.initialize();
+    app.innerHTML = "";
+
+    try {
+        await authStore.initialize();
+    } catch (error) {
+        console.warn("Auth initialization failed", error);
+    }
 
     if (!authStore.user) {
-        app.innerHTML = "";
         app.appendChild(authView());
         return;
     }

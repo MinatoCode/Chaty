@@ -1,4 +1,4 @@
-import { messages } from "../data/messages.js";
+import { messages as initialMessages } from "../data/messages.js";
 import { getCurrentTime } from "../utils/time.js";
 
 export default function chatWindow() {
@@ -55,11 +55,13 @@ export default function chatWindow() {
     const sendButton = element.querySelector(".send-btn");
     const messagesContainer = element.querySelector(".messages");
 
+    const messageList = Array.isArray(initialMessages) ? initialMessages : [];
+
     function renderMessages() {
 
         messagesContainer.innerHTML = "";
 
-        messages.forEach((message) => {
+        messageList.forEach((message) => {
 
             const bubble = document.createElement("div");
 
@@ -84,7 +86,7 @@ export default function chatWindow() {
 
         if (!text) return;
 
-        messages.push({
+        messageList.push({
             id: Date.now(),
             sender: "You",
             text,
