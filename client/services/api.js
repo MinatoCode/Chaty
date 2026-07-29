@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+import { API_BASE_URL } from '../config/appConfig.js';
 
 async function request(path, options = {}) {
   const headers = {
@@ -11,15 +11,21 @@ async function request(path, options = {}) {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...options,
-    headers
-  });
+  let response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      ...options,
+      headers
+    });
+  } catch (networkError) {
+    throw new Error(`Network error: ${networkError.message}`);
+  }
 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(data.message || 'Request failed');
+    const errorMessage = data.message || data.error || response.statusText || 'Request failed';
+    throw new Error(`${errorMessage} (${response.status})`);
   }
 
   return data;
