@@ -39,10 +39,19 @@ async function bootstrap() {
     const overlay = document.createElement("div");
     overlay.id = "overlay";
 
+    const initialChatWindow = chatWindow();
+    const listComponent = chatList({
+        onSelectChat: (chat) => {
+            mainContent.innerHTML = '';
+            mainContent.appendChild(chatWindow(chat));
+            document.body.classList.add('chat-open');
+        }
+    });
+
     headerContainer.appendChild(header());
     sidebarContainer.appendChild(sidebar());
-    chatListContainer.appendChild(chatList());
-    mainContent.appendChild(chatWindow());
+    chatListContainer.appendChild(listComponent);
+    mainContent.appendChild(initialChatWindow);
 
     layoutContainer.appendChild(sidebarContainer);
     layoutContainer.appendChild(chatListContainer);
@@ -61,12 +70,6 @@ async function bootstrap() {
     overlay.addEventListener("click", () => {
         sidebarContainer.classList.remove("active");
         overlay.classList.remove("show");
-    });
-
-    document.querySelectorAll(".chat-item").forEach((chat) => {
-        chat.addEventListener("click", () => {
-            document.body.classList.add("chat-open");
-        });
     });
 
     document.querySelector(".chat-back-btn")?.addEventListener("click", () => {

@@ -47,6 +47,18 @@ export async function searchUsers(query) {
   return request(`/users/search?q=${encodeURIComponent(query)}`);
 }
 
+export async function sendFriendRequest(userId) {
+  return request('/users/friend-requests', { method: 'POST', body: JSON.stringify({ userId }) });
+}
+
+export async function getFriendRequests() {
+  return request('/users/friend-requests');
+}
+
+export async function createChat(userId, name) {
+  return request('/users/chats', { method: 'POST', body: JSON.stringify({ userId, name }) });
+}
+
 export async function getChats() {
   return request('/chats');
 }
