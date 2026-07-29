@@ -51,6 +51,13 @@ export async function sendFriendRequest(userId) {
   return request('/users/friend-requests', { method: 'POST', body: JSON.stringify({ userId }) });
 }
 
+export async function respondFriendRequest(requestId, status) {
+  return request(`/users/friend-requests/${encodeURIComponent(requestId)}/respond`, {
+    method: 'POST',
+    body: JSON.stringify({ status })
+  });
+}
+
 export async function getFriendRequests() {
   return request('/users/friend-requests');
 }

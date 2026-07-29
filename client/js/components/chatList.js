@@ -1,4 +1,4 @@
-import { createChat, getChats, getFriendRequests, searchUsers, sendFriendRequest } from '../../services/api.js';
+import { createChat, getChats, getFriendRequests, respondFriendRequest, searchUsers, sendFriendRequest } from '../../services/api.js';
 
 export default function chatList({ onSelectChat } = {}) {
   const element = document.createElement('div');
@@ -6,7 +6,7 @@ export default function chatList({ onSelectChat } = {}) {
 
   element.innerHTML = `
     <h3>Chats</h3>
-    <input class="chat-search" placeholder="Search people by name or username..." />
+    <input class="chat-search" placeholder="Search people by name or email..." />
     <div class="search-results"></div>
     <div class="friend-requests"></div>
     <div class="chat-items"></div>
@@ -68,7 +68,7 @@ export default function chatList({ onSelectChat } = {}) {
         </div>
         <div class="action-row">
           <button class="friend-btn">Add Friend</button>
-          <button class="chat-btn">Send Chat</button>
+          <button class="chat-btn">Send Message</button>
         </div>
       `;
 
@@ -118,7 +118,36 @@ export default function chatList({ onSelectChat } = {}) {
       requests.forEach((request) => {
         const item = document.createElement('div');
         item.className = 'request-item';
-        item.innerHTML = `<strong>${request.senderId?.name || 'Someone'}</strong>`;
+        item.innerHTML = `
+          <div class="request-info">
+            <strong>${request.senderId?.name || 'Someone'}</strong>
+            <span>${request.senderId?.email || ''}</span>
+          </div>
+          <div class="request-actions">
+            <button class="accept-btn">Accept</button>
+            <button class="reject-btn">Reject</button>
+          </div>
+        `;
+
+        item.querySelector('.accept-btn').addEventListener('click', async () => {
+          try {
+            await respondFriendRequest(request._id, 'accepted');
+            await loadFriendRequests();
+            await loadChats();
+          } catch (error) {
+            item.querySelector('.accept-btn').textContent = 'Error';
+          }
+        });
+
+        item.querySelector('.reject-btn').addEventListener('click', async () => {
+          try {
+            await respondFriendRequest(request._id, 'rejected');
+            await loadFriendRequests();
+          } catch (error) {
+            item.querySelector('.reject-btn').textContent = 'Error';
+          }
+        });
+
         requestsContainer.appendChild(item);
       });
     } catch (error) {

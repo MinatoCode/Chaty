@@ -49,6 +49,41 @@ router.post('/friend-requests', async (req, res) => {
   res.status(201).json({ request });
 });
 
+router.post('/friend-requests/:requestId/respond', async (req, res) => {
+  const { status } = req.body;
+  if (!['accepted', 'rejected'].includes(status)) {
+    return res.status(400).json({ message: 'Invalid status' });
+  }
+
+  const request = await FriendRequest.findById(req.params.requestId);
+  if (!request || request.recipientId.toString() !== req.user.id) {
+    return res.status(404).json({ message: 'Request not found' });
+  }
+
+  if (request.status !== 'pending') {
+    return res.status(409).json({ message: 'Request already handled' });
+  }
+
+  request.status = status;
+  await request.save();
+
+  if (status === 'accepted') {
+    const existingChat = await Chat.findOne({
+      participants: { $all: [req.user.id, request.senderId] },
+      $expr: { $eq: [{ $size: '$participants' }, 2] }
+    });
+
+    if (!existingChat) {
+      await Chat.create({
+        participants: [req.user.id, request.senderId],
+        name: 'New Chat'
+      });
+    }
+  }
+
+  res.json({ request });
+});
+
 router.get('/friend-requests', async (req, res) => {
   const requests = await FriendRequest.find({ recipientId: req.user.id, status: 'pending' }).populate('senderId', 'name email status');
   res.json({ requests });

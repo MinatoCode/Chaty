@@ -7,30 +7,19 @@ export default function header() {
     element.innerHTML = `
 
         <div class="header-left">
-
-            <button class="menu-btn">
-                ☰
-            </button>
-
             <div class="header-logo">
                 ChatVerse
             </div>
-
         </div>
 
-
         <div class="header-actions">
-
             <button class="notification-btn">
                 🔔
             </button>
-
             <div class="header-avatar"></div>
-
         </div>
 
     `;
-
 
     return element;
 }

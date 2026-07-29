@@ -1,4 +1,5 @@
 import { getChatMessages, sendChatMessage } from '../../services/api.js';
+import { authStore } from '../../store/authStore.js';
 
 export default function chatWindow(chat = null) {
     const element = document.createElement('div');
@@ -28,6 +29,14 @@ export default function chatWindow(chat = null) {
     let activeChat = chat;
     let messages = [];
 
+    const hasChat = Boolean(activeChat?._id);
+    input.disabled = !hasChat;
+    sendButton.disabled = !hasChat;
+
+    if (!hasChat) {
+        input.placeholder = 'Select a chat to start messaging.';
+    }
+
     async function loadMessages() {
         if (!activeChat?._id) {
             messagesContainer.innerHTML = '<p class="empty">Select or start a chat to begin messaging.</p>';
@@ -50,9 +59,13 @@ export default function chatWindow(chat = null) {
             return;
         }
 
+        const currentUserId = authStore.user?.id;
+
         messages.forEach((message) => {
             const bubble = document.createElement('div');
-            bubble.className = 'message received';
+            const senderId = message.senderId?.toString ? message.senderId.toString() : message.senderId;
+            const isOwnMessage = senderId === currentUserId;
+            bubble.className = `message ${isOwnMessage ? 'sent' : 'received'}`;
             bubble.innerHTML = `<div>${message.text}</div><small class="message-time">${new Date(message.createdAt).toLocaleTimeString()}</small>`;
             messagesContainer.appendChild(bubble);
         });

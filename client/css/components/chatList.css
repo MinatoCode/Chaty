@@ -24,13 +24,83 @@
 
 
 .chat-items {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
+}
 
+.search-results,
+.friend-requests {
+    margin-top: 18px;
+}
+
+.user-card,
+.request-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.user-card .user-info,
+.request-item .request-info {
+    flex: 1;
+}
+
+.user-card h4,
+.request-info strong {
+    margin: 0 0 4px;
+    font-size: 1rem;
+}
+
+.user-card p,
+.request-info span {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.action-row,
+.request-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-row button,
+.request-actions button {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.friend-btn,
+.accept-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.chat-btn,
+.reject-btn {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-primary);
+}
+
+.chat-btn:hover,
+.friend-btn:hover,
+.accept-btn:hover,
+.reject-btn:hover {
+    opacity: 0.9;
+}
+
+.empty {
+    color: var(--text-secondary);
+    margin: 14px 0;
 }
 
 
