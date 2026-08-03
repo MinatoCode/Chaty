@@ -101,13 +101,15 @@ router.post('/chats', async (req, res) => {
   });
 
   if (existingChat) {
-    return res.json({ chat: existingChat });
+    const populatedChat = await existingChat.populate('participants', 'name email status');
+    return res.json({ chat: populatedChat });
   }
 
-  const chat = await Chat.create({
+  let chat = await Chat.create({
     participants: [req.user.id, userId],
     name: name || 'New Chat'
   });
+  chat = await chat.populate('participants', 'name email status');
 
   res.status(201).json({ chat });
 });

@@ -1,4 +1,5 @@
 import { createChat, getFriendRequests, respondFriendRequest, searchUsers, sendFriendRequest } from '../../services/api.js';
+import { authStore } from '../../store/authStore.js';
 import chatStore from '../../store/chatStore.js';
 
 export default function chatList({ onSelectChat } = {}) {
@@ -35,15 +36,22 @@ export default function chatList({ onSelectChat } = {}) {
       return;
     }
 
+    const currentUserId = authStore.user?.id;
     chatsContainer.innerHTML = '';
     chats.forEach((chat) => {
+      const participant = Array.isArray(chat.participants)
+        ? chat.participants.find((p) => p?._id?.toString?.() !== currentUserId && p?.toString?.() !== currentUserId)
+        : null;
+      const displayName = participant?.name || chat.name || 'New Chat';
+      const initial = (displayName || 'C').charAt(0).toUpperCase();
+
       const chatItem = document.createElement('button');
       chatItem.className = 'chat-item';
       chatItem.innerHTML = `
-        <div class="chat-avatar online">${(chat.name || 'C').charAt(0).toUpperCase()}</div>
+        <div class="chat-avatar online">${initial}</div>
         <div class="chat-info">
           <div class="chat-top">
-            <strong>${chat.name || 'New Chat'}</strong>
+            <strong>${displayName}</strong>
             <span>Live</span>
           </div>
           <div class="chat-bottom">
@@ -114,9 +122,10 @@ export default function chatList({ onSelectChat } = {}) {
   }
 
   async function loadChats() {
-    await chatStore.loadChats();
-    // subscribe to updates
+    // subscribe first so we receive the initial load event
     chatStore.subscribe(handleStoreUpdate);
+    await chatStore.loadChats();
+    handleStoreUpdate({ detail: chatStore.getState() });
   }
 
   async function loadFriendRequests() {

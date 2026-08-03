@@ -8,7 +8,10 @@ export default function chatWindow(chat = null, onBack = null) {
     const currentUserId = authStore.user?.id;
     const isDirectChat = Array.isArray(chat?.participants) && chat.participants.length <= 2;
     const directParticipant = isDirectChat
-        ? (chat.participants || []).find((participant) => participant?._id?.toString?.() !== currentUserId && participant?._id?.toString?.() !== currentUserId?.toString?.())
+        ? (chat.participants || []).find((participant) => {
+            const participantId = participant?._id?.toString?.() || participant?.toString?.();
+            return participantId && participantId !== currentUserId && participantId !== currentUserId?.toString?.();
+          })
         : null;
     const headerTitle = directParticipant?.name || chat?.name || 'Select a chat';
     const headerSubtitle = directParticipant ? (directParticipant.status || 'Online') : (chat ? 'Online' : 'Choose a conversation');
@@ -60,8 +63,37 @@ export default function chatWindow(chat = null, onBack = null) {
     async function handleStoreUpdate(e) {
         localState = e.detail;
         const chatId = activeChat?._id;
+        if (chatId) {
+            const freshChat = localState.chats?.find((c) => c._id === chatId);
+            if (freshChat) {
+                activeChat = freshChat;
+                renderHeader(activeChat);
+            }
+        }
         const messages = (localState.messages && chatId && localState.messages[chatId]) ? localState.messages[chatId] : [];
         renderMessages(messages);
+    }
+
+    function renderHeader(chatData) {
+        const currentUserId = authStore.user?.id;
+        const isDirectChat = Array.isArray(chatData?.participants) && chatData.participants.length <= 2;
+        const directParticipant = isDirectChat
+            ? (chatData.participants || []).find((participant) => {
+                const participantId = participant?._id?.toString?.() || participant?.toString?.();
+                return participantId && participantId !== currentUserId && participantId !== currentUserId?.toString?.();
+              })
+            : null;
+        const headerTitle = directParticipant?.name || chatData?.name || 'Select a chat';
+        const headerSubtitle = directParticipant ? (directParticipant.status || 'Online') : (chatData ? 'Online' : 'Choose a conversation');
+        const headerInitial = (headerTitle || 'C').charAt(0).toUpperCase();
+
+        const avatar = element.querySelector('.chat-avatar');
+        const titleEl = element.querySelector('.chat-user h3');
+        const subtitleEl = element.querySelector('.chat-user span');
+
+        if (avatar) avatar.textContent = headerInitial;
+        if (titleEl) titleEl.textContent = headerTitle;
+        if (subtitleEl) subtitleEl.textContent = headerSubtitle;
     }
 
     function renderMessages(messages) {
