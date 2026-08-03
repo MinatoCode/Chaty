@@ -3,6 +3,7 @@ import chatList from "./components/chatList.js";
 import chatWindow from "./components/chatWindow.js";
 import authView from "./components/authView.js";
 import { authStore } from "../store/authStore.js";
+import chatStore from "../store/chatStore.js";
 
 const app = document.getElementById("app");
 
@@ -11,6 +12,7 @@ async function bootstrap() {
 
     try {
         await authStore.initialize();
+        await chatStore.initialize();
     } catch (error) {
         console.warn("Auth initialization failed", error);
     }

@@ -15,6 +15,7 @@ const state = {
 };
 
 let currentMessagesController = null;
+let socketInitialized = false;
 
 export function subscribe(cb) {
   emitter.addEventListener('change', cb);
@@ -29,18 +30,21 @@ function emitChange() {
 }
 
 export async function initialize() {
+  if (socketInitialized) return;
+
   // ensure auth is ready
   await authStore.initialize();
   connectSocket(authStore.user?.id);
 
   onSocket('message.new', (message) => {
-    // append message to messages map
     const chatId = message.chatId || (message.chatId === undefined ? null : message.chatId);
     if (!chatId) return;
     state.messages[chatId] = state.messages[chatId] || [];
-    // avoid duplicates
     if (!state.messages[chatId].some(m => m._id === message._id)) {
       state.messages[chatId].push(message);
+      if (state.activeChat?._id?.toString?.() === chatId?.toString?.()) {
+        state.activeChat = state.chats.find((c) => c._id === chatId) || state.activeChat;
+      }
       emitChange();
     }
   });
@@ -49,10 +53,14 @@ export async function initialize() {
     state.messages[chatId] = state.messages[chatId] || [];
     if (!state.messages[chatId].some(m => m._id === message._id)) {
       state.messages[chatId].push(message);
+      if (state.activeChat?._id?.toString?.() === chatId?.toString?.()) {
+        state.activeChat = state.chats.find((c) => c._id === chatId) || state.activeChat;
+      }
       emitChange();
     }
   });
 
+  socketInitialized = true;
   await loadChats();
 }
 
