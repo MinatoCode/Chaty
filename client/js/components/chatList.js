@@ -107,13 +107,15 @@ export default function chatList({ onSelectChat } = {}) {
     });
   }
 
+  function handleStoreUpdate(e) {
+    const s = e.detail;
+    renderChats(s.chats || []);
+  }
+
   async function loadChats() {
-    try {
-      const { chats = [] } = await getChats();
-      renderChats(chats);
-    } catch (error) {
-      chatsContainer.innerHTML = `<p class="empty">${error.message}</p>`;
-    }
+    await chatStore.loadChats();
+    // subscribe to updates
+    chatStore.subscribe(handleStoreUpdate);
   }
 
   async function loadFriendRequests() {

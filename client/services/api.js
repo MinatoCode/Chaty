@@ -70,8 +70,8 @@ export async function getChats() {
   return request('/chats');
 }
 
-export async function getChatMessages(chatId) {
-  return request(`/chats/${chatId}/messages`);
+export async function getChatMessages(chatId, options = {}) {
+  return request(`/chats/${chatId}/messages`, { method: 'GET', ...options });
 }
 
 export async function sendChatMessage(chatId, text) {

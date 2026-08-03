@@ -1,18 +1,27 @@
-import { getChatMessages, sendChatMessage } from '../../services/api.js';
 import { authStore } from '../../store/authStore.js';
+import chatStore from '../../store/chatStore.js';
 
 export default function chatWindow(chat = null, onBack = null) {
     const element = document.createElement('div');
     element.className = 'chat-window';
 
+    const currentUserId = authStore.user?.id;
+    const isDirectChat = Array.isArray(chat?.participants) && chat.participants.length <= 2;
+    const directParticipant = isDirectChat
+        ? (chat.participants || []).find((participant) => participant?._id?.toString?.() !== currentUserId && participant?._id?.toString?.() !== currentUserId?.toString?.())
+        : null;
+    const headerTitle = directParticipant?.name || chat?.name || 'Select a chat';
+    const headerSubtitle = directParticipant ? (directParticipant.status || 'Online') : (chat ? 'Online' : 'Choose a conversation');
+    const headerInitial = (headerTitle || 'C').charAt(0).toUpperCase();
+
     element.innerHTML = `
         <div class="chat-header">
             <button class="chat-back-btn">➜</button>
             <div class="chat-user">
-                <div class="chat-avatar online">${(chat?.name || 'C').charAt(0).toUpperCase()}</div>
+                <div class="chat-avatar online">${headerInitial}</div>
                 <div class="chat-info">
-                    <h3>${chat?.name || 'Select a chat'}</h3>
-                    <span>${chat? 'Online' : 'Choose a conversation'}</span>
+                    <h3>${headerTitle}</h3>
+                    <span>${headerSubtitle}</span>
                 </div>
             </div>
         </div>
@@ -28,7 +37,9 @@ export default function chatWindow(chat = null, onBack = null) {
     const backButton = element.querySelector('.chat-back-btn');
     const messagesContainer = element.querySelector('.messages');
     let activeChat = chat;
-    let messages = [];
+
+    // local snapshot reference
+    let localState = chatStore.getState();
 
     const hasChat = Boolean(activeChat?._id);
     input.disabled = !hasChat;
@@ -46,24 +57,16 @@ export default function chatWindow(chat = null, onBack = null) {
         }
     });
 
-    async function loadMessages() {
-        if (!activeChat?._id) {
-            messagesContainer.innerHTML = '<p class="empty">Select or start a chat to begin messaging.</p>';
-            return;
-        }
-
-        try {
-            const { messages: fetchedMessages = [] } = await getChatMessages(activeChat._id);
-            messages = fetchedMessages;
-            renderMessages();
-        } catch (error) {
-            messagesContainer.innerHTML = `<p class="empty">${error.message}</p>`;
-        }
+    async function handleStoreUpdate(e) {
+        localState = e.detail;
+        const chatId = activeChat?._id;
+        const messages = (localState.messages && chatId && localState.messages[chatId]) ? localState.messages[chatId] : [];
+        renderMessages(messages);
     }
 
-    function renderMessages() {
+    function renderMessages(messages) {
         messagesContainer.innerHTML = '';
-        if (!messages.length) {
+        if (!messages || !messages.length) {
             messagesContainer.innerHTML = '<p class="empty">No messages yet. Start the conversation.</p>';
             return;
         }
@@ -78,7 +81,10 @@ export default function chatWindow(chat = null, onBack = null) {
             bubble.innerHTML = `<div>${message.text}</div><small class="message-time">${new Date(message.createdAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</small>`;
             messagesContainer.appendChild(bubble);
         });
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // auto-scroll if near bottom
+        const nearBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop - messagesContainer.clientHeight < 120;
+        if (nearBottom) messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     async function sendMessage() {
@@ -86,11 +92,10 @@ export default function chatWindow(chat = null, onBack = null) {
         if (!text || !activeChat?._id) return;
 
         try {
-            await sendChatMessage(activeChat._id, text);
             input.value = '';
-            await loadMessages();
+            await chatStore.sendMessage(activeChat._id, text);
         } catch (error) {
-            messagesContainer.innerHTML = `<p class="empty">${error.message}</p>`;
+            // error state will be emitted by the store
         }
     }
 
@@ -102,9 +107,17 @@ export default function chatWindow(chat = null, onBack = null) {
         }
     });
 
+    // subscribe to store updates
+    chatStore.subscribe(handleStoreUpdate);
+
     if (hasChat) {
-        loadMessages();
+        chatStore.loadMessages(activeChat._id);
     }
+
+    // cleanup when element removed
+    element.cleanup = () => {
+        chatStore.unsubscribe(handleStoreUpdate);
+    };
 
     return element;
 }
