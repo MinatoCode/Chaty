@@ -1,4 +1,5 @@
-import { createChat, getChats, getFriendRequests, respondFriendRequest, searchUsers, sendFriendRequest } from '../../services/api.js';
+import { createChat, getFriendRequests, respondFriendRequest, searchUsers, sendFriendRequest } from '../../services/api.js';
+import chatStore from '../../store/chatStore.js';
 
 export default function chatList({ onSelectChat } = {}) {
   const element = document.createElement('div');
